@@ -8,7 +8,7 @@ type SongListProps = {
 
 const SongList = ({ songs, onSongClick }: SongListProps) => {
   return (
-    <div className="flex gap-3 flex-wrap justify-start">
+    <div className="flex gap-5 flex-wrap justify-start">
       {songs.map((song) => (
         <SongCard
           key={song.id}

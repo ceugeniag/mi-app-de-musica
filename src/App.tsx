@@ -17,8 +17,6 @@ function App() {
   return (
     <div className="bg-black text-white min-h-screen flex flex-col">
 <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-<h1 className="text-red-500 text-2xl">Tailwind ahora sí anda 🔥</h1>
-
       <div className="flex-grow overflow-auto px-6 py-4">
         <SongCategoryCard title="🎧 Mis Recomendadas">
           <SongList songs={filterSongs(recommendedSongs)} onSongClick={setSelectedSong} />

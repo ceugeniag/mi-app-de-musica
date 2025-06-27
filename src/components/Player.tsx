@@ -98,9 +98,12 @@ const Player = ({ song, onClose }: MusicPlayerProps) => {
       <div className="flex items-center gap-4">
         <button
           onClick={togglePlay}
-          className="bg-white text-black px-4 py-2 rounded hover:bg-gray-300"
+          className="bg-gray-800 text-gray-100 px-6 py-2 rounded-lg
+            border-gray-700 border-b-[4px]
+            hover:bg-black hover:-translate-y-[1px] hover:border-b-[6px]
+            active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
         >
-          {isPlaying ? '⏸️ Pausar' : '▶️ Reproducir'}
+          {isPlaying ? 'Pausar' : 'Reproducir'}
         </button>
       </div>
     </div>

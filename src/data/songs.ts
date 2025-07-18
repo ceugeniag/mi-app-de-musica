@@ -242,4 +242,11 @@ export const classicSongs: Song[] = [
     image: "https://i.discogs.com/Bmyu_2Jxb1ODxYsPmcS0SLpPnsnXw94Wh-toqoZVmjM/rs:fit/g:sm/q:90/h:547/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk0ODc0/NC0xNTg2Mzk0NjQ1/LTQzMjIuanBlZw.jpeg",
     audio: "https://assets.dev-filo.dift.io/audio/2024/10/16/lago_en_el_cielo.mp3"
   }
+
+];
+export const songsAll = [
+  ...recommendedSongs,
+  ...topHits,
+  ...favoriteSongs,
+  ...classicSongs,
 ];

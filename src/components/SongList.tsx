@@ -3,7 +3,7 @@ import type { Song } from "../data/songs";
 
 type SongListProps = {
   songs: Song[];
-  onSongClick: (song: Song) => void;
+  onSongClick?: (song: Song) => void;
 };
 
 const SongList = ({ songs, onSongClick }: SongListProps) => {
@@ -13,7 +13,7 @@ const SongList = ({ songs, onSongClick }: SongListProps) => {
         <SongCard
           key={song.id}
           {...song}
-          onClick={() => onSongClick(song)}
+          onClick={() => onSongClick?.(song)}
         />
       ))}
     </div>

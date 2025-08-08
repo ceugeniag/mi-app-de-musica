@@ -1,43 +1,32 @@
-import { useState } from "react";
+import { Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
-import SongCategoryCard from './components/SongCategoryCard';
-import SongList from './components/SongList';
 import Player from './components/Player';
-import type { Song } from './data/songs';
-import { recommendedSongs, topHits, favoriteSongs, classicSongs } from './data/songs';
+import Home from './pages/Home';
+import SongDetail from './pages/SongDetail';
+import Favorites from './pages/Favorites';
 
 function App() {
-  const [selectedSong, setSelectedSong] = useState<Song | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  // Filtrar canciones por nombre
-  const filterSongs = (songs: Song[]) =>
-    songs.filter(song => song.title.toLowerCase().includes(searchTerm.toLowerCase()));
+  const [selectedSong, setSelectedSong] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col">
-<Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div className="flex-grow overflow-auto px-6 py-4">
-        <SongCategoryCard title="🎧 Mis Recomendadas">
-          <SongList songs={filterSongs(recommendedSongs)} onSongClick={setSelectedSong} />
-        </SongCategoryCard>
-
-        <SongCategoryCard title="🔥 Lo más escuchado">
-          <SongList songs={filterSongs(topHits)} onSongClick={setSelectedSong} />
-        </SongCategoryCard>
-
-        <SongCategoryCard title="🆕 Modo fan">
-          <SongList songs={filterSongs(favoriteSongs)}  onSongClick={setSelectedSong} />
-        </SongCategoryCard>
-
-        <SongCategoryCard title="🎸 Mis clásicos">
-          <SongList songs={filterSongs(classicSongs)}  onSongClick={setSelectedSong} />
-        </SongCategoryCard>
+        <Routes>
+          <Route
+            path="/"
+            element={<Home searchTerm={searchTerm} onSongClick={setSelectedSong} />}
+          />
+          <Route path="/song/:id" element={<SongDetail />} />
+          <Route path="/favorites/:artist" element={<Favorites />} />
+        </Routes>
       </div>
 
-{selectedSong && (
-  <Player song={selectedSong} onClose={() => setSelectedSong(null)} />
-  )}
+      {selectedSong && (
+        <Player song={selectedSong} onClose={() => setSelectedSong(null)} />
+      )}
     </div>
   );
 }

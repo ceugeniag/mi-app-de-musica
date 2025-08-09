@@ -27,8 +27,9 @@ const SongCard = ({ id, title, artist, cover, genre, onClick }: SongProps) => {
             {title}
           </h3>
         </Link>
-
-        <p className="text-gray-400 text-sm truncate">{artist}</p>
+        <Link to={`/favorites/${artist}`}>
+        <p className="text-gray-400 text-sm truncate hover:underline">{artist}</p>
+        </Link>
         <p className="text-gray-500 text-xs mt-1">{genre}</p>
 
         {/* Botón Play */}

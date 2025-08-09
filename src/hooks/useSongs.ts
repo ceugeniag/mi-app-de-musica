@@ -89,8 +89,13 @@ export function useSongsByArtist(artist: string) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!artist) return;
+useEffect(() => {
+  if (!artist) {
+    setSongs([]);
+    setLoading(false);
+    setError(null);
+    return;
+  }
 
     async function fetchSongs() {
       try {

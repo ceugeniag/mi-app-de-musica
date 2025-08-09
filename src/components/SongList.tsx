@@ -1,6 +1,7 @@
 import SongCard from "./SongCard";
 import type { Song } from "../types/Song";
 
+
 type SongListProps = {
   songs: Song[];
   onSongClick?: (song: Song) => void;

@@ -27,7 +27,8 @@ function App() {
             }
           />
           <Route path="/song/:id" element={<SongDetail />} />
-          <Route path="/favorites/:artist" element={<Favorites />} />
+          <Route path="/favorites/:artist" element={<Favorites onSongClick={setSelectedSong} />}
+            />
         </Routes>
       </div>
 

@@ -1,26 +1,47 @@
-import { useAllSongs } from '../hooks/useSongs';
+import { useEffect, useState } from 'react';
+// @ts-expect-error no types
+import { musicService } from '../services/music/service';
 import SongList from '../components/SongList';
-import Navbar from '../components/Navbar';
-import { useState } from 'react';
+import type { Song } from '../types/Song';
 
-export default function Home() {
-  const { songs, loading, error } = useAllSongs();
-  const [searchTerm, setSearchTerm] = useState('');
+type HomeProps = {
+  searchTerm: string;
+  onSongClick: (song: Song) => void;
+};
 
-  const filteredSongs = songs.filter(song =>
-    song.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+export default function Home({ searchTerm, onSongClick }: HomeProps) {
+  const [songs, setSongs] = useState<Song[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchSongs() {
+      try {
+        setLoading(true);
+        let data: Song[];
+        if (searchTerm.trim()) {
+          data = await musicService.searchSongs(searchTerm);
+        } else {
+          data = await musicService.getAllSongs();
+        }
+        setSongs(data);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        setError(message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchSongs();
+  }, [searchTerm]);
 
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col">
-      <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <main className="flex-grow overflow-auto px-6 py-4">
-        {loading && <p>Cargando canciones...</p>}
-        {error && <p>Error: {error}</p>}
-        {!loading && !error && (
-          <SongList songs={filteredSongs} onSongClick={() => {}} />
-        )}
-      </main>
-    </div>
+    <main className="flex-grow overflow-auto px-6 py-4">
+      {loading && <p>Cargando canciones...</p>}
+      {error && <p>Error: {error}</p>}
+      {!loading && !error && (
+        <SongList songs={songs} onSongClick={onSongClick} />
+      )}
+    </main>
   );
 }
